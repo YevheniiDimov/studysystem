@@ -10,8 +10,11 @@
     </head>
     <body class="d-flex flex-column align-items-center vh-100">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-        <header class="d-flex align-items-center w-100 row text-white px-3" style="{% block colors %}{% endblock colors %}">
+        <header class="d-flex justify-content-between align-items-center w-100 text-white mx-3" style="{% block colors %}{% endblock colors %}">
             <h2 class="px-5">{% block workspace %}{% endblock workspace %}</h2>
+            {% if user.is_authenticated %}
+                <h3 class="mx-3"><a href="/accounts/logout" class="link-light text-decoration-none">Log out</a></h3>
+            {% endif %}
         </header>
         <main class="col-10 py-3">
             <h3 class="text-center">{% block message %}{% endblock message %}</h3>
