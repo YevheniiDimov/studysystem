@@ -31,16 +31,17 @@ def workspace(request, workspace):
     context = {"workspace": workspace, "documents": documents, "form": DocumentForm(), "message": ""}
     
     if request.method == 'POST':
-        form = DocumentForm(request.POST)
+        form = DocumentForm(request.POST, request.FILES)
+        
         if form.is_valid():
-            document = Document(name = form.cleaned_data['name'], description = form.cleaned_data['description'], date = datetime.datetime.now().date(), file = form.cleaned_data['file'], user = request.user)
+            document = Document(name = form.cleaned_data['name'], description = form.cleaned_data['description'], date = datetime.datetime.now().date(), file = form.cleaned_data['file'], workspace = workspace)
             document.save()
             
             context["message"] = "Document created successfully!"
             context["message_color"] = "text-success"
         else:
+            print(form.errors)
             context["message"] = "Document creation failed!"
             context["message_color"] = "text-danger"
     
     return render(request, "workspace.html", context=context)
-    

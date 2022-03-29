@@ -4,7 +4,7 @@
 {% block workspace %}<a href="/" class="link-light text-decoration-none">Home</a> — <a href="/workspace/{{workspace.id}}" class="link-light text-decoration-none">{{workspace.name}}</a>{% endblock workspace %}
 {% block colors %}background-color: {{workspace.backcolor}}{% endblock colors %}
 
-{% block message %}<span class="{{message_color}}">{{message}}</span>{% endblock message %}
+{% block message %}<span class="{{message_color}}">{{message}} {{form.errors}}</span>{% endblock message %}
 
 {% block content %}
     <div class="container-fluid d-flex flex-wrap justify-content-center justify-content-md-between align-items-center">
@@ -20,7 +20,7 @@
         {% endfor %}
     </div>
     <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
-        <form action="/" method="post" class="container-fluid">
+        <form action="/workspace/{{workspace.id}}" method="post" enctype="multipart/form-data" class="container-fluid">
             {% csrf_token %}
             <div class="form-group d-flex justify-content-between my-1">
                 <label for="name">Name</label>
