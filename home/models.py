@@ -1,5 +1,6 @@
 from django.db import models
 from colorfield.fields import ColorField
+from martor.models import MartorField
 import uuid
 
 """Create Workspace model with name, description, date and color"""
@@ -21,7 +22,7 @@ class Document(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=250, blank=True)
     date = models.DateTimeField(auto_now_add=True)
-    file = models.FileField(upload_to='documents/')
+    text = MartorField()
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     
     workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE)

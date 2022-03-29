@@ -1,0 +1,52 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Document — {{document.name}}{% endblock title %}
+{% block workspace %}<a href="/" class="link-light text-decoration-none">Home</a> — <a href="/workspace/{{workspace.id}}" class="link-light text-decoration-none">{{workspace.name}}</a> — <a href="/workspace/{{workspace.id}}/document/{{document.id}}" class="link-light text-decoration-none">{{document.name}}</a>{% endblock workspace %}
+{% block colors %}background-color: {{workspace.backcolor}}{% endblock colors %}
+
+{% block message %}<span class="{{message_color}}">{{message}}</span>{% endblock message %}
+{% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="{% static 'js/document.js' %}"></script>
+{% endblock js %}
+
+{% block content %}
+    <div class="d-none" id="workspace-id">{{workspace.id}}</div>
+    <div class="d-none" id="document-id">{{document.id}}</div>
+    <div class="d-none" id="d-text">{{text}}</div>
+    <div class="container-fluid">
+        <div class="row h-100">
+            <div class="col-1 d-none d-md-block bg-light sidebar">
+                <div class="d-flex justify-content-center align-items-center">
+                    <ul class="nav d-flex flex-column align-items-center">
+                        <li class="nav-item">
+                            <button class="btn text-secondary save-button">Save</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn text-secondary delete-button">Delete</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9 col-lg-10">
+                <main role="main" class="container">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">{{document.name}}</h1>
+                        <div class="btn-toolbar mb-2 mb-md-0">
+                            <div class="btn-group mr-2">
+                                <button id="preview" class="btn btn-outline-secondary">Preview</button>
+                                <button class="btn btn-outline-secondary save-button">Save</button>
+                                <button class="btn btn-outline-secondary delete-button">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-100 h-75">
+                        <textarea id="editor" class="w-100 h-100" style="resize: none;border: none;outline:none">{{document.text}}</textarea>
+                        <div id="preview-container" class="w-100 h-100"></div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
