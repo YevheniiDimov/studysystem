@@ -1,0 +1,22 @@
+{% extends 'main.html' %} 
+
+{% block title %}Workspace — {{workspace.name}}{% endblock title %}
+{% block workspace %}<a href="/" class="link-light text-decoration-none">Home</a> — <a href="/workspace/{{workspace.id}}" class="link-light text-decoration-none">{{workspace.name}}</a>{% endblock workspace %}
+{% block colors %}background-color: {{workspace.backcolor}}{% endblock colors %}
+
+{% block content %}
+    <div class="container-fluid d-flex flex-wrap justify-content-center justify-content-md-between align-items-center">
+        {% for document in documents %}
+            <div class="card col-10 col-md-3 p-0 m-3">
+                <div class="card-header w-100">
+                    <h5 class="card-title">{{document.name}}</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{document.description}}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+
+{% block footer %}{% endblock footer %}
