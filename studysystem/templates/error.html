@@ -1,0 +1,9 @@
+{% extends 'main.html' %}
+
+{% block title %}Error{% endblock title %}
+{% block workspace %}<span class="link-light text-decoration-none">Error</span>{% endblock workspace %}
+{% block colors %}background-color: #EA0040{% endblock colors %}
+
+{% block content %}
+    <h1 class="text-danger text-center">{{message}}</h1>
+{% endblock content %}

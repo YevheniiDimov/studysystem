@@ -2,8 +2,10 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from .models import Workspace, Document
 from .forms import WorkspaceForm, DocumentForm, FileForm
+from django.contrib.auth.decorators import login_required
 import datetime
 
+@login_required
 def index(request):
     if request.user.is_authenticated:
         workspaces = Workspace.objects.filter(user=request.user)
@@ -25,8 +27,13 @@ def index(request):
     else:
         return redirect('/accounts/login')
 
+@login_required
 def workspace(request, workspace):
     workspace = Workspace.objects.filter(id=workspace).first()
+    
+    if workspace.user != request.user:
+        return render(request, "error.html", context={"message": "You are not allowed to access this workspace!"})
+    
     documents = Document.objects.filter(workspace=workspace)
     context = {"workspace": workspace, "documents": documents, "form": DocumentForm(), "file_form": FileForm(), "message": ""}
     
@@ -51,8 +58,12 @@ def workspace(request, workspace):
     
     return render(request, "workspace.html", context=context)
 
+@login_required
 def workspace_action(request, workspace, action):
     workspace = Workspace.objects.filter(id=workspace).first()
+    
+    if workspace.user != request.user:
+        return render(request, "error.html", context={"message": "You are not allowed to access this workspace!"})
     
     try:
         if action == "delete":
@@ -70,9 +81,13 @@ def workspace_action(request, workspace, action):
     except:
         return JsonResponse({"status": "Something went wrong", "status_color": "text-danger"});
 
+@login_required
 def document(request, workspace, document):
     workspace = Workspace.objects.filter(id=workspace).first()
     document = Document.objects.filter(id=document).first()
+    
+    if workspace.user != request.user or document.workspace != workspace:
+        return render(request, "error.html", context={"message": "You are not allowed to access this document!"})
     
     form = DocumentForm()
     form.name = document.name
@@ -89,9 +104,13 @@ def document(request, workspace, document):
     
     return render(request, "document.html", context=context)
 
+@login_required
 def document_action(request, workspace, document, action):
     workspace = Workspace.objects.filter(id=workspace).first()
     document = Document.objects.filter(id=document).first()
+    
+    if workspace.user != request.user or document.workspace != workspace:
+        return render(request, "error.html", context={"message": "You are not allowed to access this document!"})
     
     try:
         if action == "delete":
