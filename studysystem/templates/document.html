@@ -21,7 +21,7 @@
                 <div class="d-flex justify-content-center align-items-center">
                     <ul class="nav d-flex flex-column align-items-center">
                         <li class="nav-item">
-                            <button class="btn text-secondary save-button">Save</button>
+                            <button class="btn text-secondary save-button" data-toggle="tooltip" data-placement="right" title="Ctrl+S">Save</button>
                         </li>
                         <li class="nav-item">
                             <button class="btn text-secondary delete-button">Delete</button>
@@ -32,11 +32,11 @@
             <div class="col-md-9 col-lg-10">
                 <main role="main" class="container">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">{{document.name}}</h1>
+                        <input type="text" class="h2" id="document-name-edit" value="{{document.name}}" style="resize: none;border: none;outline:none">
                         <div class="btn-toolbar mb-2 mb-md-0">
                             <div class="btn-group mr-2">
-                                <button id="preview" class="btn btn-outline-secondary">Preview</button>
-                                <button class="btn btn-outline-secondary save-button">Save</button>
+                                <button id="preview" class="btn btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Ctrl+M">Preview</button>
+                                <button class="btn btn-outline-secondary save-button" data-toggle="tooltip" data-placement="top" title="Ctrl+S">Save</button>
                                 <button class="btn btn-outline-secondary delete-button">Delete</button>
                             </div>
                         </div>
@@ -49,4 +49,5 @@
             </div>
         </div>
     </div>
+    <a id="download-link" class="d-none"></a>
 {% endblock content %}
