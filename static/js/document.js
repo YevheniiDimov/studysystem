@@ -27,7 +27,7 @@ function document_action(link) {
 function save_md() {
     let blob = new Blob([text], {type: "text/plain;charset=utf-8"});
     download_link.href = URL.createObjectURL(blob);
-    download_link.download = "document.md";
+    download_link.download = document_name_edit.value + ".md";
     download_link.click();
 }
 

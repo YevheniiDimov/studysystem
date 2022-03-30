@@ -76,10 +76,18 @@ def workspace_action(request, workspace, action):
                 return JsonResponse({"status": "Name was successfuly changed", "status_color": "text-success"});
             else:
                 return JsonResponse({"status": "Name is empty", "status_color": "text-danger"});
+        if action == 'color':
+            if len(request.GET.get('forecolor')) > 0 and len(request.GET.get('backcolor')) > 0:
+                workspace.forecolor = request.GET.get('forecolor')
+                workspace.backcolor = request.GET.get('backcolor')
+                workspace.save()
+                return JsonResponse({"status": "Color was successfuly changed", "status_color": "text-success"});
+            else:
+                return JsonResponse({"status": "Color is empty", "status_color": "text-danger"});
         else:
             return JsonResponse({"status": "Unknown action " + action, "status_color": "text-danger"});
-    except:
-        return JsonResponse({"status": "Something went wrong", "status_color": "text-danger"});
+    except(Exception) as e:
+        return JsonResponse({"status": "Something went wrong: " + str(e), "status_color": "text-danger"});
 
 @login_required
 def document(request, workspace, document):

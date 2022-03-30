@@ -2,8 +2,8 @@
 {% load static %}
 
 {% block title %}Workspace — {{workspace.name}}{% endblock title %}
-{% block workspace %}<a href="/" class="link-light text-decoration-none">Home</a> — <a href="/workspace/{{workspace.id}}" class="link-light text-decoration-none" id="workspace-link">{{workspace.name}}</a>{% endblock workspace %}
-{% block colors %}background-color: {{workspace.backcolor}}{% endblock colors %}
+{% block colors %}background-color: {{workspace.backcolor}};color: {{workspace.forecolor}}{% endblock colors %}
+{% block workspace %}<a href="/" class="text-light text-decoration-none">Home</a> — <a href="/workspace/{{workspace.id}}" class="text-light text-decoration-none" id="workspace-link">{{workspace.name}}</a>{% endblock workspace %}
 
 {% block message %}<span class="{{message_color}}">{{message}} {{form.errors}}</span>{% endblock message %}
 {% block js %}
@@ -13,7 +13,11 @@
 
 {% block content %}
     <div class="d-none" id="workspace-id">{{workspace.id}}</div>
-    <input type="text" class="w-100 text-center h2" id="workspace-name-edit" value="{{workspace.name}}" style="resize: none;border: none;outline:none">
+    <input type="text" class="h2 w-100 text-center" id="workspace-name-edit" value="{{workspace.name}}" style="border: none;outline:none">
+    <div class="w-100 d-flex justify-content-center align-items-center">
+        <input type="color" id="color-picker-fore" value="{{workspace.forecolor}}">
+        <input type="color" id="color-picker-back" value="{{workspace.backcolor}}">
+    </div>
     <div class="container-fluid d-flex flex-wrap justify-content-center justify-content-md-between align-items-center">
         {% for document in documents %}
             <div class="card col-10 col-md-3 p-0 m-3">
@@ -48,8 +52,8 @@
             </form>
         </div>
     </div>
-    <div class="d-flex justify-content-center mt-5">
-        <button class="btn btn-danger mt-5 mb-3" id="delete-workspace">Delete workspace</button>
+    <div class="d-flex justify-content-center align-items-center col-12 mt-5">
+        <button class="btn btn-danger" id="delete-workspace">Delete workspace</button>
     </div>
 {% endblock content %}
 
